@@ -1,7 +1,6 @@
 package admin_jyb.news.util;
 
 
-import android.util.Log;
 
 import java.io.IOException;
 

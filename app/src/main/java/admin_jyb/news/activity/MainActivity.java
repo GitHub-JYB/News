@@ -12,7 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import admin_jyb.news.R;
-import admin_jyb.news.social.SocialFragment;
+import admin_jyb.news.news.ContentFragment;
+import admin_jyb.news.news.social.SocialFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.content,SocialFragment.newInstence()).commit();
+        fragmentTransaction.add(R.id.content, ContentFragment.newInstence()).commit();
     }
 
     private void selectDrawerItem(MenuItem item) {

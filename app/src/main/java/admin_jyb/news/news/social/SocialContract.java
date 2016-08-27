@@ -1,4 +1,4 @@
-package admin_jyb.news.social;
+package admin_jyb.news.news.social;
 
 import java.util.List;
 
