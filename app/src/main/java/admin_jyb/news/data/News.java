@@ -1,5 +1,8 @@
 package admin_jyb.news.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -47,7 +50,7 @@ public class News {
         this.newslist = newslist;
     }
 
-    public static class NewslistBean {
+    public static class NewslistBean implements Parcelable {
         private String ctime;
         private String title;
         private String description;
@@ -104,5 +107,42 @@ public class News {
         public void setUrl(String url) {
             this.url = url;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.ctime);
+            dest.writeString(this.title);
+            dest.writeString(this.description);
+            dest.writeString(this.picUrl);
+            dest.writeString(this.url);
+        }
+
+        public NewslistBean() {
+        }
+
+        protected NewslistBean(Parcel in) {
+            this.ctime = in.readString();
+            this.title = in.readString();
+            this.description = in.readString();
+            this.picUrl = in.readString();
+            this.url = in.readString();
+        }
+
+        public static final Parcelable.Creator<NewslistBean> CREATOR = new Parcelable.Creator<NewslistBean>() {
+            @Override
+            public NewslistBean createFromParcel(Parcel source) {
+                return new NewslistBean(source);
+            }
+
+            @Override
+            public NewslistBean[] newArray(int size) {
+                return new NewslistBean[size];
+            }
+        };
     }
 }

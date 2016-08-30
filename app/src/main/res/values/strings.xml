@@ -2,4 +2,9 @@
     <string name="app_name">NEWS</string>
     <string name="open">navigation_open</string>
     <string name="close">navigation_close</string>
+    <string name="world">国际</string>
+    <string name="sports">体育</string>
+    <string name="science">科技</string>
+    <string name="health">健康</string>
+    <string name="Title">新闻中心</string>
 </resources>

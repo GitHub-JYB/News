@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -28,8 +29,10 @@ public class ApiClient {
 
     public interface ApiService {
 
-        @GET("social/social")
-        Observable<News> getSocialResponse(@Query("num")int num);
+        @GET("{channel}")
+        Observable<News> getSocialResponse(@Path("channel") String channle,
+                                           @Query("num") int num,
+                                           @Query("page") int page);
     }
 
     private static Retrofit getClient(){
@@ -45,6 +48,9 @@ public class ApiClient {
         return retrofit;
     }
 
+    /**
+     *  添加请求头
+     */
     private static OkHttpClient headerclient() {
 
         OkHttpClient okHttpClient =new OkHttpClient.Builder()
