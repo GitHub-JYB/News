@@ -7,4 +7,6 @@
     <string name="science">科技</string>
     <string name="health">健康</string>
     <string name="Title">新闻中心</string>
+    <string name="News">新闻</string>
+    <string name="Photo">图片</string>
 </resources>

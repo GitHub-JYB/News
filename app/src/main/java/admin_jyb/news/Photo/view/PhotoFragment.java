@@ -1,4 +1,4 @@
-package admin_jyb.news.news.view;
+package admin_jyb.news.Photo.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,58 +14,60 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import admin_jyb.news.Photo.PhotoRecycleAdapter;
 
+import admin_jyb.news.Photo.presenter.PhotoPresenterImpl;
 import admin_jyb.news.R;
-import admin_jyb.news.news.NewsChannelRecycleAdapter;
 import admin_jyb.news.data.News;
+import admin_jyb.news.news.DetailFragment;
 import admin_jyb.news.news.NewsFragment;
-import admin_jyb.news.news.model.NewsModelImpi;
-import admin_jyb.news.news.presenter.NewsPresenterImpl;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
- * Created by Admin-JYB on 2016/8/27.
+ * Created by Admin-JYB on 2016/8/30.
  */
 
-public class NewsChannelFragment extends Fragment implements NewsView {
+public class PhotoFragment extends Fragment implements PhotoView {
 
-
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycle_view)
     RecyclerView recycleView;
-
-    private NewsPresenterImpl presenter;
-    private NewsChannelRecycleAdapter adapter;
-    private int mtype = NewsModelImpi.NEWS_TYPE_WORLD;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    private PhotoPresenterImpl presenter;
     private int page = 1;
+    private PhotoRecycleAdapter adapter;
     private NewsFragment.OnReplaceFragmentListener listener;
 
-    public NewsChannelFragment() {
+    public PhotoFragment() {
         setPresenter();
-    }
-
-    public static NewsChannelFragment newInstence(int type) {
-        Bundle bundle = new Bundle();
-        NewsChannelFragment fragment = new NewsChannelFragment();
-        bundle.putInt("type",type);
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Override
     public void setPresenter() {
-        presenter = new NewsPresenterImpl(this);
+        presenter = new PhotoPresenterImpl(this);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mtype = getArguments().getInt("type");
-
+    public void showPhotoList(List<News.NewslistBean> newslist) {
+        adapter.setDatas(newslist);
+        cancelRefresh();
     }
 
+    @Override
+    public void cancelRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showMorePhotoList(List<News.NewslistBean> newslist) {
+        adapter.addDatas(newslist);
+    }
+
+    public static PhotoFragment newInstence() {
+        return new PhotoFragment();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -74,7 +76,7 @@ public class NewsChannelFragment extends Fragment implements NewsView {
             listener = (NewsFragment.OnReplaceFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + "must implement OnMoveListener");
+                    + "must implement OnReplaceFragmentListener");
         }
     }
 
@@ -84,12 +86,12 @@ public class NewsChannelFragment extends Fragment implements NewsView {
         listener = null;
     }
 
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_newschannle, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+            Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_photo, container, false);
         ButterKnife.bind(this, view);
         initRefreshLayout();
         initRecycleView();
@@ -97,23 +99,23 @@ public class NewsChannelFragment extends Fragment implements NewsView {
     }
 
     private void initRecycleView() {
-        recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new NewsChannelRecycleAdapter(recycleView);
-        adapter.setOnItemClickListener(new NewsChannelRecycleAdapter.OnItemClickListener() {
+        recycleView.setHasFixedSize(true);
+        adapter = new PhotoRecycleAdapter(recycleView);
+        adapter.setOnItemClickListener(new PhotoRecycleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                News.NewslistBean bean = adapter.getItem(position);
-                listener.onReplaceNewsFragment(NewsChannelFragment.this,bean);
+                News.NewslistBean Bean = adapter.getItem(position);
+                listener.onReplacePhotoFragment(PhotoFragment.this, Bean);
 
             }
         });
-        adapter.setOnLoadMoreListener(new NewsChannelRecycleAdapter.OnLoadMoreListener() {
+        adapter.setOnLoadMoreListener(new PhotoRecycleAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 page++ ;
-                presenter.getMoreNewsFromModel(mtype,page);
+                presenter.getMorePhotoFromModel(page);
             }
         });
         recycleView.setAdapter(adapter);
@@ -127,7 +129,7 @@ public class NewsChannelFragment extends Fragment implements NewsView {
             @Override
             public void run() {
                 page = 1;
-                presenter.getNewsListFromModel(mtype,page);
+                presenter.getPhotoListFromModel(page);
             }
         });
 
@@ -135,27 +137,11 @@ public class NewsChannelFragment extends Fragment implements NewsView {
             @Override
             public void onRefresh() {
                 page = 1;
-                presenter.getNewsListFromModel(mtype,page);
+                presenter.getPhotoListFromModel(page);
 
             }
         });
 
-    }
-
-    @Override
-    public void showNewsList(List<News.NewslistBean> newslistBean) {
-        adapter.setDatas(newslistBean);
-        cancelRefresh();
-    }
-
-    @Override
-    public void showMoreNewsToView(List<News.NewslistBean> newslistBeen) {
-        adapter.addDatas(newslistBeen);
-    }
-
-    @Override
-    public void cancelRefresh() {
-        swipeRefreshLayout.setRefreshing(false);
     }
 
 

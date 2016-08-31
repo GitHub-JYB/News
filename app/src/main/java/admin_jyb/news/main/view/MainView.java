@@ -10,5 +10,6 @@ import android.support.v4.app.Fragment;
 public interface MainView {
     void closeDrawers();
 
-    void replaceFragment(Fragment fragment);
+
+    void replaceFragment(Fragment oldfragment, Fragment fragment);
 }

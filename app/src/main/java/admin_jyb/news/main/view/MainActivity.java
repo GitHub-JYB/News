@@ -12,14 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import admin_jyb.news.Photo.view.PhotoFragment;
 import admin_jyb.news.R;
+import admin_jyb.news.data.News;
 import admin_jyb.news.main.presenter.MainPresenterImpl;
+import admin_jyb.news.news.DetailFragment;
 import admin_jyb.news.news.NewsFragment;
+import admin_jyb.news.news.view.NewsChannelFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView ,NewsFragment.OnReplaceFragmentListener{
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.navigation_view)
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         initToolbar();
         initToggle();
         initDrawerContent();
-        replaceFragment(NewsFragment.newInstence());
+        replaceFragment(null,NewsFragment.newInstence());
     }
 
     private void initDrawerContent() {
@@ -99,8 +103,23 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment oldFragment, Fragment newFragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content, fragment).commit();
+        if (newFragment instanceof DetailFragment) {
+            fragmentTransaction.hide(oldFragment)
+                                .addToBackStack(null);
+        }
+        fragmentTransaction.replace(R.id.content, newFragment).commit();
+    }
+
+    @Override
+    public void onReplacePhotoFragment(PhotoFragment photoFragment, News.NewslistBean bean) {
+        replaceFragment(photoFragment,DetailFragment.newInstance(bean));
+    }
+
+    @Override
+    public void onReplaceNewsFragment(NewsChannelFragment newsFragment, News.NewslistBean bean) {
+        replaceFragment(newsFragment,DetailFragment.newInstance(bean));
+
     }
 }

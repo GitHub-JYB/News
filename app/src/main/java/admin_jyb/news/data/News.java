@@ -125,7 +125,7 @@ public class News {
         public NewslistBean() {
         }
 
-        protected NewslistBean(Parcel in) {
+        public NewslistBean(Parcel in) {
             this.ctime = in.readString();
             this.title = in.readString();
             this.description = in.readString();

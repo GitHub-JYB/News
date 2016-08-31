@@ -33,6 +33,7 @@ public class ApiClient {
         Observable<News> getSocialResponse(@Path("channel") String channle,
                                            @Query("num") int num,
                                            @Query("page") int page);
+
     }
 
     private static Retrofit getClient(){

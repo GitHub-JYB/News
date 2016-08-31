@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import admin_jyb.news.Photo.view.PhotoFragment;
 import admin_jyb.news.R;
+import admin_jyb.news.data.News;
 import admin_jyb.news.news.model.NewsModelImpi;
 import admin_jyb.news.news.view.NewsChannelFragment;
 import butterknife.BindView;
@@ -61,5 +63,12 @@ public class NewsFragment extends Fragment {
                 getString(R.string.health));
         viewpager.setAdapter(adapter);
         viewpager.setOffscreenPageLimit(3);
+    }
+
+
+    public interface OnReplaceFragmentListener{
+        void onReplacePhotoFragment(PhotoFragment photoFragment, News.NewslistBean bean);
+        void onReplaceNewsFragment(NewsChannelFragment newsFragment, News.NewslistBean bean);
+
     }
 }

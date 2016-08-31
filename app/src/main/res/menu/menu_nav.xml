@@ -3,10 +3,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_news"
-            android:title="新闻"
+            android:title="@string/News"
             android:checked="true"/>
         <item
             android:id="@+id/navigation_photo"
-            android:title="图片"/>
+            android:title="@string/Photo"/>
     </group>
 </menu>

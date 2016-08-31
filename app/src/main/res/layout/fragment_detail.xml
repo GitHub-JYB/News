@@ -5,7 +5,7 @@
     android:id="@+id/activity_news_del"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="admin_jyb.news.news.NewsDelActivity">
+    tools:context="admin_jyb.news.news.DetailFragment">
 
 
 

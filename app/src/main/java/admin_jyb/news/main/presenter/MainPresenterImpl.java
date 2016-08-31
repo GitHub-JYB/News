@@ -2,6 +2,7 @@ package admin_jyb.news.main.presenter;
 
 import android.view.MenuItem;
 
+import admin_jyb.news.Photo.view.PhotoFragment;
 import admin_jyb.news.R;
 import admin_jyb.news.main.view.MainView;
 import admin_jyb.news.news.NewsFragment;
@@ -24,12 +25,12 @@ public class MainPresenterImpl implements MainPresenter {
             switch (item.getItemId()){
                 case R.id.navigation_news:
                     if (!isItemChecked(item)){
-                        mainView.replaceFragment(NewsFragment.newInstence());
+                        mainView.replaceFragment(null,NewsFragment.newInstence());
                     }
                     break;
                 case R.id.navigation_photo:
                     if (!isItemChecked(item)){
-                        mainView.replaceFragment(NewsFragment.newInstence());
+                        mainView.replaceFragment(null,PhotoFragment.newInstence());
                     }
                     break;
             }

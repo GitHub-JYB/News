@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".news.NewsDelActivity">
+        <activity android:name=".news.DetailFragment">
         </activity>
     </application>
 
